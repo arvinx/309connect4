@@ -1,6 +1,3 @@
-
-<!DOCTYPE html>
-
 <html>
 	<head>
 		<style>
@@ -47,6 +44,16 @@
 	echo form_label('Email');
 	echo form_error('email');
 	echo form_input('email',set_value('email'),"required");
+
+	$warning = $this->session->flashdata("captcha_error");
+	if ($warning) {
+		echo "<br><div data-alert class='alert-box'>" . $warning . "</div>";
+	}
+
+	echo "<br>Please enter the following text as you see it, to make sure you are a human!<br><br>";
+	echo "<img id='captcha' src='" . base_url() ."/securimage/securimage_show.php' alt='CAPTCHA Image' />"; 
+	echo "<input type='text' name='captcha_code' size='10' maxlength='6' />";
+	echo "<a href='#' onclick=\"document.getElementById('captcha').src ='" . base_url() . "/securimage/securimage_show.php?' + Math.random(); return false\">[ Different Image ]</a>";
 	echo form_submit('submit', 'Register');
 	echo form_close();
 ?>	

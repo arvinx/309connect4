@@ -6,6 +6,10 @@ class Account extends CI_Controller {
     		// Call the Controller constructor
 	    	parent::__construct();
 	    	session_start();
+
+	    	//include(base_url() . 'securimage/securimage.php');
+
+	    	$this->load->helper('securimage');
     }
         
     public function _remap($method, $params = array()) {
@@ -75,11 +79,13 @@ class Account extends CI_Controller {
 	    	$this->form_validation->set_rules('password', 'Password', 'required');
 	    	$this->form_validation->set_rules('first', 'First', "required");
 	    	$this->form_validation->set_rules('last', 'last', "required");
-	    	$this->form_validation->set_rules('email', 'Email', "required|is_unique[user.email]");
+	    	$this->form_validation->set_rules('email', 'Email', "required|is_unique[user.email]");	    	
 	    	
-	    
-	    	if ($this->form_validation->run() == FALSE)
+	    	$securimage = new Securimage();
+
+	    	if ($securimage->check($_POST['captcha_code']) == false || $this->form_validation->run() == FALSE)
 	    	{
+				$this->session->set_flashdata("captcha_error", "The text you entered did not match the image!");
 	    		$this->load->view('account/newForm');
 	    	}
 	    	else  
