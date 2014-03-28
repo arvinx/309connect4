@@ -78,10 +78,14 @@
 				url: endpoint,
 				type: 'POST',
 				async: false,
-				data: {"row": row, "col": col}
+				data: {"row": row, "col": col},
+				success: function(data) {
+					alert("heere hello" + data.test);
+				}
 			});
 			turn(false);
 		});
+
 
 	// var table_rows = $(".game-board").children().each(function(i, c) {
 	// 	var cell_li = $(c);

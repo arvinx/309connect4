@@ -79,10 +79,13 @@ class Board extends CI_Controller {
     	$col = $this->input->post('col');
 		$this->load->model('match_model');
 		$user = $_SESSION['user'];
-		error_log("getting user " . $user->id);
     	$cur_match = $this->match_model->get_cur_match_for_user($user->id);
     	$cur_board = unserialize($cur_match->board_state);
-    	error_log("Val: " . $cur_match->user1_id);
+    	$player_num = (($user->id == $cur_match->user1_id) ? 1: 2);
+    	$cur_board[$row][$col] = $player_num;
+    	$this->match_model->set_cur_board($cur_match->id, serialize($cur_board));
+    	echo json_encode(array('board' => $cur_board, 'test' => "hello"));
+    	// error_log("Val: " . $cur_board[$row][$col]);
     }
 
  	function postMsg() {

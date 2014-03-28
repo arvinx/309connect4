@@ -23,14 +23,19 @@ class Match_model extends CI_Model {
 
 	function get_cur_match_for_user($user_id) {
 		$this->db->where('user1_id', $user_id);
-		$this->db->or_where('user2_id', $iuser_id);
+		$this->db->or_where('user2_id', $user_id);
 		$query = $this->db->get('match');
-		if ($query && $query->num_rows() > 0)
+		if ($query && $query->num_rows() > 0) {
 			return $query->row(0,'Match');
-		else
+		} else {
 			return null;
+		}
 	}
 	
+	function set_cur_board($id, $board) {
+		$this->db->where('id',$id);
+		return $this->db->update('match',array('board_state'=>$board));
+	}
 	
 	function insert($match) {
 		return $this->db->insert('match',$match);
