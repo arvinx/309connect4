@@ -52,8 +52,32 @@ class Board extends CI_Controller {
 	    			$data['status'] = 'waiting';
 	    			break;
 	    	}
-	    	
+
+	    	switch($user->user_status_id) {
+	    		case User::PLAYING:	
+	    			$_SESSION['turn'] = false;
+	    			break;
+	    		case User::WAITING:
+	    			$_SESSION['turn'] = true;
+	    			break;
+	    	}
+
 		$this->load->view('match/board',$data);
+    }
+
+    function getTurn() {
+    	error_log($_SESSION['turn']);
+		echo json_encode(array('turn' => $_SESSION['turn']));
+    }
+
+    function setTurn() {
+
+    }
+
+    function postMove() {
+    	$row = $this->input->post('row');
+    	$col = $this->input->post('col');
+
     }
 
  	function postMsg() {

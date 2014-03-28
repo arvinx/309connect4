@@ -1,0 +1,30 @@
+.grid {
+	background-color: #008cba;
+	padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+.large-12.columns {  /* applies to the div which has the both classes */
+    text-align: center;
+}
+
+ul.button-group{
+    display: inline-block;
+    margin: 0px 0px 0px 0px;
+}
+
+button.disabled, button[disabled], .button.disabled, .button[disabled] {
+	background-color: gray;
+}
+
+
+/*.row {
+	line-height:0px;
+	margin: 0px 0px 0px 0px;
+    display: inline-block;
+	padding: 0px 0px 0px 0px;
+}
+
+br {
+	height:0px; visibility:hidden; margin-bottom:-20px;
+   display: block;
+}*/
