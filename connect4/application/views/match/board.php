@@ -65,7 +65,7 @@
 				$('.game-board').find('.disabled').attr('disabled', false);
 
 			} else {
-				$('.game-board').find('*').attr('disabled', true);
+				// $('.game-board').find('*').attr('disabled', true);
 			}
 		}
 
@@ -81,7 +81,7 @@
 				data: {"row": row, "col": col}
 			});
 			turn(false);
-		})
+		});
 
 	// var table_rows = $(".game-board").children().each(function(i, c) {
 	// 	var cell_li = $(c);

@@ -89,7 +89,8 @@ class Arcade extends CI_Controller {
 	    	}
 	    	$board_state[$i] = $row;
 	    }
-	    $match->board_state = $board_state;
+	    // $this->match_model->empty_table();
+	    $match->board_state = serialize($board_state);
 	    $this->match_model->insert($match);
 	    $matchId = mysql_insert_id();
 

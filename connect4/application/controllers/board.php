@@ -77,7 +77,12 @@ class Board extends CI_Controller {
     function postMove() {
     	$row = $this->input->post('row');
     	$col = $this->input->post('col');
-
+		$this->load->model('match_model');
+		$user = $_SESSION['user'];
+		error_log("getting user " . $user->id);
+    	$cur_match = $this->match_model->get_cur_match_for_user($user->id);
+    	$cur_board = unserialize($cur_match->board_state);
+    	error_log("Val: " . $cur_match->user1_id);
     }
 
  	function postMsg() {
