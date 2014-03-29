@@ -10,6 +10,7 @@
 	<script src="<?= base_url() ?>/js/jquery.timers.js"></script>
 	<script src="<?= base_url() ?>/js/vendor/modernizr.js"></script>
 	<script src="<?= base_url() ?>/js/connect4.js"></script>
+	<script src="<?= base_url() ?>/js/arcade/clearSend.js"></script>
 	<script>
 
 
@@ -50,6 +51,7 @@
 				var conversation = $('[name=conversation]').val();
 				var msg = $('[name=msg]').val();
 				$('[name=conversation]').val(conversation + "\n" + user + ": " + msg);
+				$('[name="msg"]').val("");
 			});
 			return false;
 		});
@@ -218,7 +220,7 @@
 
 			echo form_open();
 			echo form_input('msg');
-			echo form_submit('Send','Send');
+			echo form_submit('send','Send');
 			echo form_close();
 
 			?>
