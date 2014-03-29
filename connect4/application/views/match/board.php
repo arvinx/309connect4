@@ -56,10 +56,9 @@
 			return false;
 		});
 
-		setInterval(function() {
+		function getTurn() {
 			$.getJSON('<?= base_url() ?>board/getTurn',function(data, text, jqZHR){
 				var board = data.board;
-				turn(data.turn);
 				var table_rows = $(".game-board").children().each(function(i, c) {
 					var cell_li = $(c);
 					var cell = cell_li.find("button");
@@ -75,16 +74,26 @@
 						} else if (value_at_cell == 1) {
 							cell.css("background-color", "green");
 						}
-						
+						if (row < 6) {
+							if (board[Number(row) + 1][col] == 1 || board[Number(row) + 1][col] == 2) {
+								cell.addClass('active');
+							}
+						}
 					}
 				});
+				turn(data.turn);
 			});
-		}, 1000);
+		}
+
+		getTurn();
+		setInterval(getTurn, 1000);
 
 		function turn(myturn) {
-			if (myturn) {
+			if (myturn) { //current players turn
+				$('#move-indicator').html("Your Turn!");
 				$('.game-board').find('.active').attr('disabled', false);
-			} else {
+			} else { //other players turn
+				$('#move-indicator').html("Other Players Turn!");
 				$('.game-board').find('*').attr('disabled', true);
 			}
 		}
@@ -137,7 +146,7 @@
 					echo "<p>Wating on " . $otherUser->login . "</p>";
 				?>
 			</div>
-
+			<h4 id='move-indicator'>.</h4>
 			<br><br>
 			<div id='game-board'>
 				<div class="large-12 columns">

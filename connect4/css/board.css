@@ -19,8 +19,10 @@ button.disabled, button[disabled], .button.disabled, .button[disabled] {
 	background-color: gray;
 }
 
-
 .button {
 	margin: 0px 0px 0px 0px;
 }
 
+#move-indicator {
+	text-align: center;
+}
