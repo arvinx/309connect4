@@ -91,7 +91,7 @@
 		setInterval(getTurn, 1000);
 
 		function checkIfWon(game_end_obj) {
-			var did_end = game_end_obj.end;
+			var did_end = game_end_obj.did_end;
 			if (end) {
 				if (game_end_obj.did_win) {
 					$('#move-indicator').html("You Won!!");

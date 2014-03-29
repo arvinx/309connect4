@@ -56,6 +56,7 @@
 	echo "<a href='#' onclick=\"document.getElementById('captcha').src ='" . base_url() . "/securimage/securimage_show.php?' + Math.random(); return false\">[ Different Image ]</a>";
 	echo form_submit('submit', 'Register');
 	echo form_close();
+	echo  anchor('account/loginForm', 'Click to Go Back to Previous Page');
 ?>	
 </body>
 
