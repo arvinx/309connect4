@@ -6,12 +6,13 @@
 }
 
 .large-12.columns {  /* applies to the div which has the both classes */
-    text-align: center;
+	text-align: center;
+	margin: 0px 0px 0px 0px;
+
 }
 
 ul.button-group{
-    display: inline-block;
-    margin: 0px 0px 0px 0px;
+	display: inline-block;
 }
 
 button.disabled, button[disabled], .button.disabled, .button[disabled] {
@@ -19,14 +20,7 @@ button.disabled, button[disabled], .button.disabled, .button[disabled] {
 }
 
 
-/*.row {
-	line-height:0px;
+.button {
 	margin: 0px 0px 0px 0px;
-    display: inline-block;
-	padding: 0px 0px 0px 0px;
 }
 
-br {
-	height:0px; visibility:hidden; margin-bottom:-20px;
-   display: block;
-}*/
