@@ -24,6 +24,7 @@ class Match_model extends CI_Model {
 	function get_cur_match_for_user($user_id) {
 		$this->db->where('user2_id', $user_id);
 		$this->db->or_where('user1_id', $user_id);
+		$this->db->order_by("id", "desc");
 		$query = $this->db->get('match');
 		if ($query && $query->num_rows() > 0) {
 			return $query->row(0,'Match');

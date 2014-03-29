@@ -107,8 +107,6 @@ class Board extends CI_Controller {
 
     	$this->match_model->set_cur_board($cur_match->id, serialize($update_state));
 
-    	// echo json_encode(array('board' => $cur_board));
-
     }
 
  	function postMsg() {

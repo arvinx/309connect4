@@ -59,12 +59,7 @@
 		setInterval(function() {
 			$.getJSON('<?= base_url() ?>board/getTurn',function(data, text, jqZHR){
 				var board = data.board;
-				if (data.turn) {
-					$('.game-board').find('.disabled').attr('disabled', false);
-				} else {
-					$('.game-board').find('*').attr('disabled', true);
-				}
-				// turn(data.turn);
+				turn(data.turn);
 				var table_rows = $(".game-board").children().each(function(i, c) {
 					var cell_li = $(c);
 					var cell = cell_li.find("button");
@@ -73,7 +68,6 @@
 						var id_str = cell.attr('id');
 						var col = id_str.charAt(1); 
 						var row = id_str.charAt(0);
-						// alert();
 						var value_at_cell = board[row][col];
 						cell.html(value_at_cell.toString());
 						if (value_at_cell == 2) {
@@ -87,14 +81,13 @@
 			});
 		}, 1000);
 
-		// function turn(myturn) {
-		// 	if (myturn) {
-		// 		// alert("You can now play");
-		// 		$('.game-board').find('.disabled').attr('disabled', false);
-		// 	} else {
-		// 		$('.game-board').find('*').attr('disabled', true);
-		// 	}
-		// }
+		function turn(myturn) {
+			if (myturn) {
+				$('.game-board').find('.active').attr('disabled', false);
+			} else {
+				$('.game-board').find('*').attr('disabled', true);
+			}
+		}
 
 		$('.grid').click(function() {
 			var row_col = $(this).attr('id');
@@ -150,53 +143,53 @@
 				<div class="large-12 columns">
 					<div class="row-centered">
 						<ul class="button-group game-board">
-							<li><button id='11' class="button grid disabled" disabled>O</button></li>
-							<li><button id='12' class="button grid disabled" disabled>O</button></li>
-							<li><button id='13' class="button grid disabled" disabled>O</button></li>
-							<li><button id='14' class="button grid disabled" disabled>O</button></li>
-							<li><button id='15' class="button grid disabled" disabled>O</button></li>
-							<li><button id='16' class="button grid disabled" disabled>O</button></li>
-							<li><button id='17' class="button grid disabled" disabled>O</button></li>
+							<li><button id='11' class="button grid" disabled>O</button></li>
+							<li><button id='12' class="button grid" disabled>O</button></li>
+							<li><button id='13' class="button grid" disabled>O</button></li>
+							<li><button id='14' class="button grid" disabled>O</button></li>
+							<li><button id='15' class="button grid" disabled>O</button></li>
+							<li><button id='16' class="button grid" disabled>O</button></li>
+							<li><button id='17' class="button grid" disabled>O</button></li>
 							<br>
-							<li><button id='21' class="button grid disabled" disabled>O</button></li>
-							<li><button id='22' class="button grid disabled" disabled>O</button></li>
-							<li><button id='23' class="button grid disabled" disabled>O</button></li>
-							<li><button id='24' class="button grid disabled" disabled>O</button></li>
-							<li><button id='25' class="button grid disabled" disabled>O</button></li>
-							<li><button id='26' class="button grid disabled" disabled>O</button></li>
-							<li><button id='27' class="button grid disabled" disabled>O</button></li>
+							<li><button id='21' class="button grid" disabled>O</button></li>
+							<li><button id='22' class="button grid" disabled>O</button></li>
+							<li><button id='23' class="button grid" disabled>O</button></li>
+							<li><button id='24' class="button grid" disabled>O</button></li>
+							<li><button id='25' class="button grid" disabled>O</button></li>
+							<li><button id='26' class="button grid" disabled>O</button></li>
+							<li><button id='27' class="button grid" disabled>O</button></li>
 							<br>							
-							<li><button id='31' class="button grid disabled" disabled>O</button></li>
-							<li><button id='32' class="button grid disabled" disabled>O</button></li>
-							<li><button id='33' class="button grid disabled" disabled>O</button></li>
-							<li><button id='34' class="button grid disabled" disabled>O</button></li>
-							<li><button id='35' class="button grid disabled" disabled>O</button></li>
-							<li><button id='36' class="button grid disabled" disabled>O</button></li>
-							<li><button id='37' class="button grid disabled" disabled>O</button></li>
+							<li><button id='31' class="button grid" disabled>O</button></li>
+							<li><button id='32' class="button grid" disabled>O</button></li>
+							<li><button id='33' class="button grid" disabled>O</button></li>
+							<li><button id='34' class="button grid" disabled>O</button></li>
+							<li><button id='35' class="button grid" disabled>O</button></li>
+							<li><button id='36' class="button grid" disabled>O</button></li>
+							<li><button id='37' class="button grid" disabled>O</button></li>
 							<br>							
-							<li><button id='41' class="button grid disabled" disabled>O</button></li>
-							<li><button id='42' class="button grid disabled" disabled>O</button></li>
-							<li><button id='43' class="button grid disabled" disabled>O</button></li>
-							<li><button id='44' class="button grid disabled" disabled>O</button></li>
-							<li><button id='45' class="button grid disabled" disabled>O</button></li>
-							<li><button id='46' class="button grid disabled" disabled>O</button></li>
-							<li><button id='47' class="button grid disabled" disabled>O</button></li>
+							<li><button id='41' class="button grid" disabled>O</button></li>
+							<li><button id='42' class="button grid" disabled>O</button></li>
+							<li><button id='43' class="button grid" disabled>O</button></li>
+							<li><button id='44' class="button grid" disabled>O</button></li>
+							<li><button id='45' class="button grid" disabled>O</button></li>
+							<li><button id='46' class="button grid" disabled>O</button></li>
+							<li><button id='47' class="button grid" disabled>O</button></li>
 							<br>							
-							<li><button id='51' class="button grid disabled" disabled>O</button></li>
-							<li><button id='52' class="button grid disabled" disabled>O</button></li>
-							<li><button id='53' class="button grid disabled" disabled>O</button></li>
-							<li><button id='54' class="button grid disabled" disabled>O</button></li>
-							<li><button id='55' class="button grid disabled" disabled>O</button></li>
-							<li><button id='56' class="button grid disabled" disabled>O</button></li>
-							<li><button id='57' class="button grid disabled" disabled>O</button></li>
+							<li><button id='51' class="button grid" disabled>O</button></li>
+							<li><button id='52' class="button grid" disabled>O</button></li>
+							<li><button id='53' class="button grid" disabled>O</button></li>
+							<li><button id='54' class="button grid" disabled>O</button></li>
+							<li><button id='55' class="button grid" disabled>O</button></li>
+							<li><button id='56' class="button grid" disabled>O</button></li>
+							<li><button id='57' class="button grid" disabled>O</button></li>
 							<br>							
-							<li><button id='61' class="button grid">O</button></li>
-							<li><button id='62' class="button grid">O</button></li>
-							<li><button id='63' class="button grid">O</button></li>
-							<li><button id='64' class="button grid">O</button></li>
-							<li><button id='65' class="button grid">O</button></li>
-							<li><button id='66' class="button grid">O</button></li>
-							<li><button id='67' class="button grid">O</button></li>
+							<li><button id='61' class="button grid active">O</button></li>
+							<li><button id='62' class="button grid active">O</button></li>
+							<li><button id='63' class="button grid active">O</button></li>
+							<li><button id='64' class="button grid active">O</button></li>
+							<li><button id='65' class="button grid active">O</button></li>
+							<li><button id='66' class="button grid active">O</button></li>
+							<li><button id='67' class="button grid active">O</button></li>
 							<br>
 						</ul>
 					</div>
