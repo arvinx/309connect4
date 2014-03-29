@@ -58,6 +58,8 @@
 
 		function getTurn() {
 			$.getJSON('<?= base_url() ?>board/getTurn',function(data, text, jqZHR){
+				var game_end = data.end;
+				// check_if_won(game_end);
 				var board = data.board;
 				var table_rows = $(".game-board").children().each(function(i, c) {
 					var cell_li = $(c);
@@ -87,6 +89,19 @@
 
 		getTurn();
 		setInterval(getTurn, 1000);
+
+		function checkIfWon(game_end_obj) {
+			var did_end = game_end_obj.end;
+			if (end) {
+				if (game_end_obj.did_win) {
+					$('#move-indicator').html("You Won!!");
+					$('.game-board').find('*').attr('disabled', true);
+				} else {
+					$('#move-indicator').html("You Lost :(");
+					$('.game-board').find('*').attr('disabled', true);					
+				}	
+			}
+		}
 
 		function turn(myturn) {
 			if (myturn) { //current players turn
