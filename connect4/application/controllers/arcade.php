@@ -62,7 +62,8 @@ class Arcade extends CI_Controller {
 	    	$this->load->model('user_model');
 	    	$this->load->model('invite_model');
 	    	$this->load->model('match_model');
-	    	
+	    		    // $this->match_model->empty_table();
+
 	    	
 	    	$user = $this->user_model->get($user->login);
 	    	
@@ -89,9 +90,9 @@ class Arcade extends CI_Controller {
 	    	}
 	    	$board_state[$i] = $row;
 	    }
-	    $turn_state = array('usr1' => false, 'usr2' => true);
-	    $state = array('turn' => $turn_state, 'board' => $board_state);
-	    // $this->match_model->empty_table();
+	    // $turn_state = array('usr1' => false, 'usr2' => true);
+
+	    $state = array('hostTurn' => true, 'board' => $board_state);
 	    $match->board_state = serialize($state);
 	    $this->match_model->insert($match);
 	    $matchId = mysql_insert_id();

@@ -62,37 +62,24 @@ class Board extends CI_Controller {
 		$user = $_SESSION['user'];
     	$cur_match = $this->match_model->get_cur_match_for_user($user->id);
     	$cur_state = unserialize($cur_match->board_state);
-    	// if ($user->id == $cur_match->user1_id) {
-    	// 	$turn = (($this->player_turn == 1) ? true : false);
-    	// 	error_log("Setting for player 1 to: " . $turn);
-    	// } else {
-    	// 	$turn = (($this->player_turn == 2) ? true : false);
-    	// 	error_log("Setting for player 2 to: " . $turn);
-    	// }
-    	// if ($_SESSION['turn'] == 1 && $this->player_turn == 1) {
-    	// 	$turn = true;
-    	// 	error_log("Player 1: " . $_SESSION['turn'] . " player_turn: " . $this->player_turn);
-    	// } else if ($_SESSION['turn'] == 1 && $this->player_turn == 2) {
-    	// 	$turn = false;
-    	// }
-
-    	// if ($_SESSION['turn'] == 2 && $this->player_turn == 2) {
-    	// 	$turn = true;
-    	// 	error_log("Player 2: " . $_SESSION['turn'] . " player_turn: " . $this->player_turn);
-    	// } else if ($_SESSION['turn'] == 2 && $this->player_turn == 1) {
-    	// 	$turn = false;
-    	// }
-    	if ($user->id == $cur_match->usr1_id) {
-    		$turn = $cur_state['turn']['usr1'];
-    		error_log("Player 1 " . $turn);
-    	} else {
-    		$turn = $cur_state['turn']['usr2'];   
-    		error_log("Player 2 " . $turn); 		
-    	}
 
 		$cur_board = $cur_state['board'];
-    	
-    	error_log("Player " . $_SESSION['user']->id . " Turn var " . $turn);
+
+    	$turn = false;
+    	if ($user->id == $cur_match->user1_id) { //invited player
+    		$turn = !$cur_state['hostTurn'];
+    	}
+
+    	if ($user->id == $cur_match->user2_id) { //host player
+    		$turn = $cur_state['hostTurn'];
+    	}
+
+    	if ($turn) {
+    		$m = "true";
+    	} else {
+    		$m = "false";
+    	}
+    	error_log("Player: " . $_SESSION['user']->id . " Turn var: " . $m);
 		echo json_encode(array('turn' => $turn, 'board' => $cur_board));
     }
 
@@ -114,20 +101,14 @@ class Board extends CI_Controller {
     	$cur_board = $cur_state['board'];
     	$cur_board[$row][$col] = $player_num;
 
-    	$cur_turn = $cur_state['turn'];
-    	error_log("****************** BEFORE " . $cur_turn['usr1']);
-    	$cur_turn['usr1'] = (($cur_turn['usr1']) ? false : true);
-    	$cur_turn['usr2'] = (($cur_turn['usr2']) ? false : true);
-    	error_log("***************** AFTER " . $cur_turn['usr1']);
-    	$update_state = array('board' => $cur_board, 'turn' => $cur_turn);
+    	$cur_turn = !$cur_state['hostTurn'];
+
+    	$update_state = array('board' => $cur_board, 'hostTurn' => $cur_turn);
 
     	$this->match_model->set_cur_board($cur_match->id, serialize($update_state));
 
-    	echo json_encode(array('board' => $cur_board));
-    	
-    	// $this->player_turn = (($this->player_turn == 1) ? 2 : 1);
-    	// error_log("new player_turn: " . $this->player_turn);
-    	// error_log("Val: " . $cur_board[$row][$col]);
+    	// echo json_encode(array('board' => $cur_board));
+
     }
 
  	function postMsg() {
