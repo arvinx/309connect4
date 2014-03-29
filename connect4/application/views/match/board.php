@@ -56,16 +56,35 @@
 
 		setInterval(function() {
 			$.getJSON('<?= base_url() ?>board/getTurn',function(data, text, jqZHR){
+				var board = data.board;
+				var table_rows = $(".game-board").children().each(function(i, c) {
+					var cell_li = $(c);
+					var cell = cell_li.find("button");
+					var cell_content = cell.html();
+					if(cell.is('button')) {
+						var id_str = cell.attr('id');
+						var col = id_str.charAt(1); 
+						var row = id_str.charAt(0);
+						// alert();
+						var value_at_cell = board[row][col];
+						cell.html(value_at_cell.toString());
+						if (value_at_cell == 2) {
+							cell.css("background-color", "red");
+						} else if (value_at_cell == 1) {
+							cell.css("background-color", "green");
+						}
+						// {"board":{"1":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0},"2":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0},"3":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0},"4":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0},"5":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0},"6":{"1":2,"2":2,"3":2,"4":2,"5":2,"6":2,"7":2}},"test":"hello"}
+					}
+				});
 				turn(data.turn);
 			});
-		}, 200);
+		}, 1000);
 
 		function turn(myturn) {
 			if (myturn) {
 				$('.game-board').find('.disabled').attr('disabled', false);
-
 			} else {
-				// $('.game-board').find('*').attr('disabled', true);
+				$('.game-board').find('*').attr('disabled', true);
 			}
 		}
 
@@ -79,8 +98,17 @@
 				type: 'POST',
 				async: false,
 				data: {"row": row, "col": col},
-				success: function(data) {
-					alert("heere hello" + data.test);
+				success: function(data, text, jqXHR) {
+					var obj = jQuery.parseJSON(data);
+					var board = obj.board;
+					var plyr = board[row.toString()][col.toString()];
+					var selector_id = "#" + row_col;
+					$(selector_id).html(plyr.toString());
+					if (plyr == 1) { 
+						$(selector_id).css("background-color", "green");
+					} else {
+						$(selector_id).css("background-color", "red");
+					}
 				}
 			});
 			turn(false);

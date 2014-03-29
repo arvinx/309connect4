@@ -1,6 +1,8 @@
 .grid {
 	background-color: #008cba;
-	padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+	padding: 0rem 0rem 0rem 0rem;
+	width: 2.0rem;
+	height: 2.0rem;
 }
 
 .large-12.columns {  /* applies to the div which has the both classes */

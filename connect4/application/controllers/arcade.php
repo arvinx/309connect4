@@ -89,8 +89,10 @@ class Arcade extends CI_Controller {
 	    	}
 	    	$board_state[$i] = $row;
 	    }
+	    $turn_state = array('usr1' => false, 'usr2' => true);
+	    $state = array('turn' => $turn_state, 'board' => $board_state);
 	    // $this->match_model->empty_table();
-	    $match->board_state = serialize($board_state);
+	    $match->board_state = serialize($state);
 	    $this->match_model->insert($match);
 	    $matchId = mysql_insert_id();
 
@@ -109,7 +111,7 @@ class Arcade extends CI_Controller {
 	    $this->db->trans_commit();
 	    
 	    echo json_encode(array('status'=>'success'));
-	    
+
 	    return;
 	    
 	    // something went wrong
@@ -233,7 +235,7 @@ class Arcade extends CI_Controller {
 		
 		// if all went well commit changes
 		$this->db->trans_commit();
-		
+
 		redirect('board/index', 'refresh'); //redirect to match stage
 		
 		
