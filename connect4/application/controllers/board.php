@@ -80,7 +80,7 @@ class Board extends CI_Controller {
     		$m = "false";
     	}
 
-		echo json_encode(array('turn' => $turn, 'board' => $cur_board));
+		echo json_encode(array('turn' => $turn, 'board' => $cur_board, 'end' => $cur_state['end']));
     }
 
     function setTurn() {
@@ -100,14 +100,33 @@ class Board extends CI_Controller {
 
     	$cur_board = $cur_state['board'];
     	$cur_board[$row][$col] = $player_num;
-      error_log($this->_checkWinner($cur_board, $row, $col, $player_num));
+      $end = array('did_end' => false, 'did_win' => false);
+      $end['did_win'] = $this->_checkWinner($cur_board, $row, $col, $player_num);
 
+      if($end['did_win']){
+        $end['did_end'] = true;
+      } else {
+        $end['did_end'] = $this->_checkEnd($cur_board);
+      }
+
+      error_log('did_win ' . $end['did_win'] . 'did_end ' . $end['did_end']);
     	$cur_turn = !$cur_state['hostTurn'];
 
-    	$update_state = array('board' => $cur_board, 'hostTurn' => $cur_turn);
+    	$update_state = array('board' => $cur_board, 'hostTurn' => $cur_turn, 'end' => $end);
 
     	$this->match_model->set_cur_board($cur_match->id, serialize($update_state));
+    }
 
+    function _checkEnd($board){
+      for ($row=1;$row<=count($board);$row++){
+        for($col=1;$col<=count($board[$row]);$col++){
+          if($board[$row][$col] == 0){
+            return false;
+          }
+        }
+      }
+      error_log('returning true');
+      return true;
     }
 
    function _checkWinner($board, $r, $c, $player) {

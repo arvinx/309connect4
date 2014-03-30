@@ -59,7 +59,7 @@
 		function getTurn() {
 			$.getJSON('<?= base_url() ?>board/getTurn',function(data, text, jqZHR){
 				var game_end = data.end;
-				// check_if_won(game_end);
+				checkIfWon(game_end);
 				var board = data.board;
 				var table_rows = $(".game-board").children().each(function(i, c) {
 					var cell_li = $(c);
@@ -67,7 +67,7 @@
 					var cell_content = cell.html();
 					if(cell.is('button')) {
 						var id_str = cell.attr('id');
-						var col = id_str.charAt(1); 
+						var col = id_str.charAt(1);
 						var row = id_str.charAt(0);
 						var value_at_cell = board[row][col];
 						cell.html(value_at_cell.toString());
@@ -88,18 +88,20 @@
 		}
 
 		getTurn();
-		setInterval(getTurn, 1000);
+		setInterval(getTurn, 800);
 
 		function checkIfWon(game_end_obj) {
 			var did_end = game_end_obj.did_end;
-			if (end) {
+			console.log(did_end);
+			console.log(game_end_obj.did_win);
+			if (did_end) {
 				if (game_end_obj.did_win) {
 					$('#move-indicator').html("You Won!!");
 					$('.game-board').find('*').attr('disabled', true);
 				} else {
 					$('#move-indicator').html("You Lost :(");
-					$('.game-board').find('*').attr('disabled', true);					
-				}	
+					$('.game-board').find('*').attr('disabled', true);
+				}
 			}
 		}
 
@@ -133,7 +135,7 @@
 	// 	var cell_content = cell.html();
 	// 	if(cell.is('button')) {
 	// 		var id_str = cell.attr('id');
-	// 		var col = Number(id_str.charAt(0)); 
+	// 		var col = Number(id_str.charAt(0));
 	// 		var row = Number(id_str.charAt(1));
 	// 		// alert("col " + col + " row: " + row);
 	// 	}
@@ -142,8 +144,8 @@
 });
 
 </script>
-</head> 
-<body> 
+</head>
+<body>
 	<div class="row">
 		<div class="medium-8 small-centered columns">
 			<h1>Game Arena</h1>
@@ -153,8 +155,8 @@
 				echo "<p>Hello " . $user->fullName() . anchor('account/logout','(Logout)') . "</p>";
 				?>
 			</div>
-			<div id='status'> 
-				<?php 
+			<div id='status'>
+				<?php
 				if ($status == "playing")
 					echo "<p>Playing " . $otherUser->login . "</p>";
 				else
@@ -182,7 +184,7 @@
 							<li><button id='25' class="button grid" disabled>O</button></li>
 							<li><button id='26' class="button grid" disabled>O</button></li>
 							<li><button id='27' class="button grid" disabled>O</button></li>
-							<br>							
+							<br>
 							<li><button id='31' class="button grid" disabled>O</button></li>
 							<li><button id='32' class="button grid" disabled>O</button></li>
 							<li><button id='33' class="button grid" disabled>O</button></li>
@@ -190,7 +192,7 @@
 							<li><button id='35' class="button grid" disabled>O</button></li>
 							<li><button id='36' class="button grid" disabled>O</button></li>
 							<li><button id='37' class="button grid" disabled>O</button></li>
-							<br>							
+							<br>
 							<li><button id='41' class="button grid" disabled>O</button></li>
 							<li><button id='42' class="button grid" disabled>O</button></li>
 							<li><button id='43' class="button grid" disabled>O</button></li>
@@ -198,7 +200,7 @@
 							<li><button id='45' class="button grid" disabled>O</button></li>
 							<li><button id='46' class="button grid" disabled>O</button></li>
 							<li><button id='47' class="button grid" disabled>O</button></li>
-							<br>							
+							<br>
 							<li><button id='51' class="button grid" disabled>O</button></li>
 							<li><button id='52' class="button grid" disabled>O</button></li>
 							<li><button id='53' class="button grid" disabled>O</button></li>
@@ -206,7 +208,7 @@
 							<li><button id='55' class="button grid" disabled>O</button></li>
 							<li><button id='56' class="button grid" disabled>O</button></li>
 							<li><button id='57' class="button grid" disabled>O</button></li>
-							<br>							
+							<br>
 							<li><button id='61' class="button grid active">O</button></li>
 							<li><button id='62' class="button grid active">O</button></li>
 							<li><button id='63' class="button grid active">O</button></li>
@@ -224,7 +226,7 @@
 			</div>
 
 			<h4>Messaging</h4>
-			<?php 
+			<?php
 
 			echo form_textarea('conversation');
 
@@ -245,4 +247,3 @@
 </body>
 
 </html>
-
