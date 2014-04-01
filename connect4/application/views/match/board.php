@@ -63,10 +63,13 @@
 				// 	clearInterval(getTurn);
 				// }
 				if (data.waiting) {
-					$('#game-board').attr('display', 'none');
+					console.log("WAITING************");
+					$('#game-board').css('display', 'none');
+					$('#move-indicator').css('display', 'none');
 					return;
 				} else {
-					$('#game-board').attr('display', 'block');
+					$('#game-board').css('display', 'block');
+					$('#move-indicator').css('display', 'block');
 				}
 				var board = data.board;
 				var table_rows = $(".game-board").children().each(function(i, c) {
@@ -96,7 +99,7 @@
 		}
 
 		getTurn();
-		setInterval(getTurn, 800);
+		setInterval(getTurn, 200);
 
 		function updateGameState(data_obj) {
 			var did_end = data_obj.end;
@@ -142,20 +145,6 @@
 				data: {"row": row, "col": col}
 			});
 		});
-
-
-	// var table_rows = $(".game-board").children().each(function(i, c) {
-	// 	var cell_li = $(c);
-	// 	var cell = cell_li.find("button");
-	// 	var cell_content = cell.html();
-	// 	if(cell.is('button')) {
-	// 		var id_str = cell.attr('id');
-	// 		var col = Number(id_str.charAt(0));
-	// 		var row = Number(id_str.charAt(1));
-	// 		// alert("col " + col + " row: " + row);
-	// 	}
-	// });
-
 });
 
 </script>

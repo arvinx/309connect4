@@ -63,11 +63,13 @@ class Board extends CI_Controller {
     $this->load->model('user_model');
     $this->load->model('user');
 
+    // $this->match_model->empty_table();
     $user = $_SESSION['user'];
     $user_model_obj = $this->user_model->getFromId($user->id);
     $waiting = false;
 
     if ($user_model_obj->user_status_id == User::WAITING) {
+      error_log("Waiting ");
       $waiting = true;
     }
 
@@ -135,10 +137,7 @@ class Board extends CI_Controller {
 
     $cur_board = $cur_state['board'];
     $cur_board[$row][$col] = $player_num;
-    // $end = array('did_end' => false, 'did_win' => false);
-    // $end['did_win'] = $this->_checkWinner($cur_board, $row, $col, $player_num);
     $other_player = (($player_num == 1) ? 2 : 1);
-    // $end['did_lose'] = $this->_checkWinner($cur_board, $row, $col, $other_player);
 
     $match_status_id = Match::ACTIVE;
     if ($this->_checkWinner($cur_board, $row, $col, $player_num)) {
@@ -156,26 +155,6 @@ class Board extends CI_Controller {
     } else if ($this->_checkEnd($cur_board)) {
       $match_status_id = Match::TIE;
     }
-
-
-
-    // if($end['did_win']){
-    //   $end['did_end'] = true;
-    //   $end['did_tie'] = false;
-    // } else if($end['did_lose']) {
-    //   $end['did_end'] = true;
-    //   $end['did_tie'] = false;
-    // } else {
-    //   $did_board_fill = $this->_checkEnd($cur_board);
-    //   if ($did_board_fill) {
-    //     $end['did_tie'] = true;
-    //     $end['did_end'] = true;
-    //   }
-    // }
-
-
-    // if (!isset($end['did_tie'])) $end['did_tie'] = false;
-    // if (!isset($end['did_end'])) $end['did_end'] = false;
 
     error_log('match_status_id - Player  ' . $cur_turn .  ' has status ' . $match_status_id);
     $cur_turn = !$cur_state['hostTurn'];
