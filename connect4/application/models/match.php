@@ -3,6 +3,7 @@ class Match  {
 	const ACTIVE = 1;
 	const U1WON = 2;
 	const U2WON = 3;
+	const TIE = 4;
 	
 	public $id;
 	

@@ -9,7 +9,6 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="<?= base_url() ?>/js/jquery.timers.js"></script>
 	<script src="<?= base_url() ?>/js/vendor/modernizr.js"></script>
-	<script src="<?= base_url() ?>/js/connect4.js"></script>
 	<script src="<?= base_url() ?>/js/arcade/clearSend.js"></script>
 	<script>
 
@@ -58,8 +57,17 @@
 
 		function getTurn() {
 			$.getJSON('<?= base_url() ?>board/getTurn',function(data, text, jqZHR){
-				var game_end = data.end;
-				checkIfWon(game_end);
+				updateGameState(data);
+				// var game_ended = endGame(data);
+				// if (game_ended) {
+				// 	clearInterval(getTurn);
+				// }
+				if (data.waiting) {
+					$('#game-board').attr('display', 'none');
+					return;
+				} else {
+					$('#game-board').attr('display', 'block');
+				}
 				var board = data.board;
 				var table_rows = $(".game-board").children().each(function(i, c) {
 					var cell_li = $(c);
@@ -83,25 +91,32 @@
 						}
 					}
 				});
-				turn(data.turn);
+				// if (!game_ended) {  };
 			});
 		}
 
 		getTurn();
 		setInterval(getTurn, 800);
 
-		function checkIfWon(game_end_obj) {
-			var did_end = game_end_obj.did_end;
-			console.log(did_end);
-			console.log(game_end_obj.did_win);
+		function updateGameState(data_obj) {
+			var did_end = data_obj.end;
+			// console.log(did_end);
+			// console.log(did_end);
 			if (did_end) {
-				if (game_end_obj.did_win) {
-					$('#move-indicator').html("You Won!!");
+				if (data_obj.match_status == 'won') {
+					$('#move-indicator').html("Game Ended - You Won!!");
 					$('.game-board').find('*').attr('disabled', true);
-				} else {
-					$('#move-indicator').html("You Lost :(");
+				} else if (data_obj.match_status == 'lost') {
+					$('#move-indicator').html("Game Over: You Lost :(");
+					$('.game-board').find('*').attr('disabled', true);
+				} else if (data_obj.match_status == 'tie') {
+					$('#move-indicator').html("Game Ended in a Tie :/");
 					$('.game-board').find('*').attr('disabled', true);
 				}
+				$('#endbtn').attr('display', 'block');
+				clearInterval(getTurn);
+			} else {
+				turn(data_obj.turn)
 			}
 		}
 
@@ -164,6 +179,9 @@
 				?>
 			</div>
 			<h4 id='move-indicator'>.</h4>
+			<?
+				anchor('arcade/index', 'Main page', array('class' => 'button', 'display' => 'none', 'id' => 'endbtn'));
+			?>
 			<br><br>
 			<div id='game-board'>
 				<div class="large-12 columns">

@@ -92,8 +92,8 @@ class Arcade extends CI_Controller {
 	    }
 	    // $turn_state = array('usr1' => false, 'usr2' => true);
       
-      $end = array('did_win' => false, 'did_end' => false);
-	    $state = array('hostTurn' => true, 'board' => $board_state, 'end' =>$end);
+		// $end = array('did_win' => false, 'did_end' => false);
+	    $state = array('hostTurn' => true, 'board' => $board_state);
 	    $match->board_state = serialize($state);
 	    $this->match_model->insert($match);
 	    $matchId = mysql_insert_id();
