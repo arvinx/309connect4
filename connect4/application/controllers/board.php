@@ -65,13 +65,7 @@ class Board extends CI_Controller {
 
     // $this->match_model->empty_table();
     $user = $_SESSION['user'];
-    $user_model_obj = $this->user_model->getFromId($user->id);
-    $waiting = false;
 
-    if ($user_model_obj->user_status_id == User::WAITING) {
-      error_log("Waiting ");
-      $waiting = true;
-    }
 
     $cur_match = $this->match_model->get_cur_match_for_user($user->id);
     $cur_state = unserialize($cur_match->board_state);
@@ -115,6 +109,14 @@ class Board extends CI_Controller {
       $m = "false";
     }
 
+    $user_model_obj = $this->user_model->getFromId($user->id);
+    $waiting = false;
+
+    if ($user_model_obj->user_status_id == User::WAITING) {
+      $waiting = true;
+      $end = false;
+    }
+
     echo json_encode(array('turn' => $turn, 'board' => $cur_board, 'end' => $end, 'match_status' => $status, 'waiting' => $waiting));
   }
 
@@ -156,7 +158,6 @@ class Board extends CI_Controller {
       $match_status_id = Match::TIE;
     }
 
-    error_log('match_status_id - Player  ' . $cur_turn .  ' has status ' . $match_status_id);
     $cur_turn = !$cur_state['hostTurn'];
 
     $update_state = array('board' => $cur_board, 'hostTurn' => $cur_turn);

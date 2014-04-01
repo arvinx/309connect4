@@ -27,6 +27,14 @@ class Arcade extends CI_Controller {
 		    	$this->load->view('arcade/mainPage',$data);
     }
 
+    function returnToIndex(){
+      $user = $_SESSION['user'];
+      $this->load->model('user_model');
+      $data['user']= $user;
+      $this->user_model->updateStatus($user->id,User::AVAILABLE);
+      $this->load->view('arcade/mainPage',$data);
+    }
+
     function getAvailableUsers() {
  	   	$this->load->model('user_model');
     		$users = $this->user_model->getAvailableUsers();
@@ -90,9 +98,7 @@ class Arcade extends CI_Controller {
 	    	}
 	    	$board_state[$i] = $row;
 	    }
-	    // $turn_state = array('usr1' => false, 'usr2' => true);
-      
-		// $end = array('did_win' => false, 'did_end' => false);
+
 	    $state = array('hostTurn' => true, 'board' => $board_state);
 	    $match->board_state = serialize($state);
 	    $this->match_model->insert($match);

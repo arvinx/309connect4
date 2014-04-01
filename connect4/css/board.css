@@ -26,3 +26,7 @@ button.disabled, button[disabled], .button.disabled, .button[disabled] {
 #move-indicator {
 	text-align: center;
 }
+
+.endBtn {
+	display: none;
+}

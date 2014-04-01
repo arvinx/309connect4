@@ -103,8 +103,6 @@
 
 		function updateGameState(data_obj) {
 			var did_end = data_obj.end;
-			// console.log(did_end);
-			// console.log(did_end);
 			if (did_end) {
 				if (data_obj.match_status == 'won') {
 					$('#move-indicator').html("Game Ended - You Won!!");
@@ -116,7 +114,7 @@
 					$('#move-indicator').html("Game Ended in a Tie :/");
 					$('.game-board').find('*').attr('disabled', true);
 				}
-				$('#endbtn').attr('display', 'block');
+				$('#endbtn').css('display', 'block');
 				clearInterval(getTurn);
 			} else {
 				turn(data_obj.turn)
@@ -168,9 +166,11 @@
 				?>
 			</div>
 			<h4 id='move-indicator'>.</h4>
-			<?
-				anchor('arcade/index', 'Main page', array('class' => 'button', 'display' => 'none', 'id' => 'endbtn'));
-			?>
+			<div class='small-5 small-centered columns'>
+				<?php
+					echo anchor('arcade/returnToIndex', 'Return to Main page', array('class' => 'endBtn button small', 'id' => 'endbtn'));
+				?>
+			</div>
 			<br><br>
 			<div id='game-board'>
 				<div class="large-12 columns">
