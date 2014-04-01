@@ -37,9 +37,9 @@ class Board extends CI_Controller {
     else if ($user->user_status_id == User::PLAYING) {
       $match = $this->match_model->get($user->match_id);
       if ($match->user1_id == $user->id)
-        $otherUser = $this->user_model->getFromId($match->user2_id);
+      $otherUser = $this->user_model->getFromId($match->user2_id);
       else
-        $otherUser = $this->user_model->getFromId($match->user1_id);
+      $otherUser = $this->user_model->getFromId($match->user1_id);
     }
 
     $data['user']=$user;
@@ -47,11 +47,11 @@ class Board extends CI_Controller {
 
     switch($user->user_status_id) {
       case User::PLAYING:
-        $data['status'] = 'playing';
-        break;
+      $data['status'] = 'playing';
+      break;
       case User::WAITING:
-        $data['status'] = 'waiting';
-        break;
+      $data['status'] = 'waiting';
+      break;
     }
 
     $this->load->view('match/board',$data);
@@ -143,15 +143,15 @@ class Board extends CI_Controller {
     $match_status_id = Match::ACTIVE;
     if ($this->_checkWinner($cur_board, $row, $col, $player_num)) {
       if ($player_num == 1) {
-        $match_status_id = Match::U1WON;        
+        $match_status_id = Match::U1WON;
       } else {
-        $match_status_id = Match::U2WON;        
+        $match_status_id = Match::U2WON;
       }
     } else if ($this->_checkWinner($cur_board, $row, $col, $other_player)) {
       if ($player_num == 2) {
-        $match_status_id = Match::U2WON;        
+        $match_status_id = Match::U2WON;
       } else {
-        $match_status_id = Match::U1WON;        
+        $match_status_id = Match::U1WON;
       }
     } else if ($this->_checkEnd($cur_board)) {
       $match_status_id = Match::TIE;
@@ -196,7 +196,6 @@ class Board extends CI_Controller {
         }
       }
     }
-    error_log('returning true');
     return true;
   }
 
@@ -254,15 +253,11 @@ class Board extends CI_Controller {
         $total++;
         $curC--;
       } else {
-        // $curC = $c+1;
-        $total--;
+        $curC = $c+1;
         break;
       }
     }
 
-    if (!$this->_checkValidMove($curR, $curC)) $total--;
-    $curR = $r;
-    $curC = $c;
     //checkRight
     while($this->_checkValidMove($curR, $curC)){
       if ($board[$curR][$curC] == $player){
@@ -289,16 +284,11 @@ class Board extends CI_Controller {
         $curR++;
       } else {
         // Switch Direction
-        // $curC = $c+1;
-        // $curR = $r-1;
-        $total--;
+        $curC = $c+1;
+        $curR = $r-1;
         break;
       }
     }
-
-    if (!$this->_checkValidMove($curR, $curC)) $total--;
-    $curR = $r;
-    $curC = $c;
 
     //check towards top right
     while($this->_checkValidMove($curR, $curC)){
@@ -327,16 +317,11 @@ class Board extends CI_Controller {
         $curR++;
       } else {
         // Switch Direction
-        // $curC = $c-1;
-        // $curR = $r-1;
-        $total--;
+        $curC = $c-1;
+        $curR = $r-1;
         break;
       }
     }
-
-    if (!$this->_checkValidMove($curR, $curC)) $total--;
-    $curR = $r;
-    $curC = $c;
 
     //check towards top left
     while($this->_checkValidMove($curR, $curC)){
@@ -351,6 +336,7 @@ class Board extends CI_Controller {
 
     return ($total >= 4 ? true:false);
   }
+
 
   function postMsg() {
     $this->load->library('form_validation');
